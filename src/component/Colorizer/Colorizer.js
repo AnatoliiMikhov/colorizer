@@ -1,17 +1,18 @@
 import React from 'react'
-import './Colorizer.scss';
+import ColorLabel from './ColorLable'
+import './Colorizer.scss'
 
 export default class Colorizer extends React.Component {
 	constructor(props) {
-		super(props);
+		super(props)
 
 		this.state = {
 			color: "",
 			bgColor: "white"
 		}
 
-		this.colorValue = this.colorValue.bind(this);
-		this.setNewColor = this.setNewColor.bind(this);
+		this.colorValue = this.colorValue.bind(this)
+		this.setNewColor = this.setNewColor.bind(this)
 	}
 
 	colorValue(e) {
@@ -23,10 +24,15 @@ export default class Colorizer extends React.Component {
 	setNewColor(e) {
 		this.setState({
 			bgColor: this.state.color
-		})
+		});
+
+		this._input.focus()
+		this._input.value = ""
+
 		e.preventDefault()
 	}
 
+	/* --------------------------------- RENDER --------------------------------- */
 	render() {
 		const squareStyle = {
 			backgroundColor: this.state.bgColor
@@ -37,11 +43,16 @@ export default class Colorizer extends React.Component {
 				<div style={squareStyle} className="colorSquare"></div>
 
 				<form onSubmit={this.setNewColor}>
-					<input onChange={this.colorValue}
+					<input
+						onChange={this.colorValue}
+						ref={
+							el => this._input = el
+						}
 						placeholder="Enter a color value"
 					/>
 					<button type="submit">Go</button>
 				</form>
+				<ColorLabel color={this.state.bgColor} />
 			</div>
 		);
 	}
